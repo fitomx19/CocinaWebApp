@@ -1,0 +1,12 @@
+/* Estilos para el header */
+.header {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Estilos para el contenido */
+.content {
+  padding: 20px;
+}
