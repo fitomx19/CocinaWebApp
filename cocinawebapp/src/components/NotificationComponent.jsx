@@ -71,10 +71,8 @@ function NotificationComponent() {
           <p>Estado: {notification.estado}</p>
           {notification.pedido.map((producto, index) => (
             <div key={index}>
-              <p>Producto: {producto.producto}</p>
-              <p>Cantidad: {producto.cantidad}</p>
-              <p>Precio: ${producto.precio}</p>
-              <p>Variante: {producto.variante}</p>
+              <p>Producto: {producto.nombre}</p>
+              
             </div>
           ))}
           <p>Comentarios {notification.comments}</p>
