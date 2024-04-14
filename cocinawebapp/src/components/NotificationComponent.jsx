@@ -58,29 +58,40 @@ function NotificationComponent() {
 
   return (
     <>
-    <center><h2>Notificaciones</h2></center>
-    <div className="notification-container">
-      <div className="user-info">
-        {userName && <p>¡Hola, {userName}!</p>}
-        <button onClick={handleLogout}>Cerrar sesión</button>
-      </div>
-      {notifications.map((notification, index) => (
-        <div className="notification" key={index}>
-          <h2>Pedido Recibido</h2>
-          <p>Total: ${notification.total}</p>
-          <p>Estado: {notification.estado}</p>
-          {notification.pedido.map((producto, index) => (
-            <div key={index}>
-              <p>Producto: {producto.nombre}</p>
-              
-            </div>
-          ))}
-          <p>Comentarios {notification.comments}</p>
-          <button onClick={() => dismissNotification(notification)}>Descartar</button>
+  <center><h2>Notificaciones de la cocina</h2></center>
+  <div className="user-info">
+      {userName && <p>¡Hola, {userName}!</p>}
+      <button className='blueButton'  onClick={handleLogout}>Cerrar sesión</button>
+  </div>
+  <div className="notification-container">
+    
+    {notifications.map((notification, index) => (
+      <div className="notification" key={index}>
+        <h2>Pedido Recibido</h2>
+        <p>Total: ${notification.total}</p>
+        <p>Estado: {notification.estado}</p>
+        <p>Cantidad: {notification.pedido.reduce((total, item) => total + item.cantidad, 0)}</p>
+        <p>Productos:</p>
+        {notification.pedido.map((producto, index) => (
+          <div key={index}>
+            <p>  <b>{producto.producto.nombre}</b></p>
+            <p>  Cantidad: {producto.cantidad}</p>
+            <p>  Variante: {producto.producto.variantes.find(variante => variante._id === producto.variante).nombre}</p>
+          </div>
+        ))}
+        <div className="comment-card">
+              <h3>Comentarios:</h3>
+              <p>{notification.comments}</p>
         </div>
-      ))}
-    </div>
-    </>
+       <div className='form-group'>
+       <button className='redButton' onClick={() => dismissNotification(notification)}>Descartar</button>
+       <button className='greenButton' onClick={() => dismissNotification(notification)}>Actualizar</button>
+       </div>
+      </div>
+    ))}
+  </div>
+</>
+
   );
 }
 

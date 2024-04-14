@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Login.css';
 import handleLogin from '../hooks/loginHook';
 import { useNavigate } from 'react-router-dom'; 
@@ -9,6 +9,15 @@ function Home() {
     const [rememberUser, setRememberUser] = useState(false);  
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const rememberedUser = localStorage.getItem('rememberedUser');
+        console.log('rememberedUser:', rememberedUser);
+        if (rememberedUser) {
+            setEmail(rememberedUser);
+            setRememberUser(true);
+        }
+    }, []); // Ejecutar solo una vez al montar el componente
 
     const handlePostLogin = async (e) => {
         e.preventDefault();
@@ -67,7 +76,7 @@ function Home() {
                     />
                     <label htmlFor="remember">Recordar usuario</label>
                 </div>
-                <button type="submit">Iniciar sesión</button>
+                <button className='button' type="submit">Iniciar sesión</button>
             </form>
             <p>Versión 0.1</p> {/* Leyenda de versión */}
         </div>
