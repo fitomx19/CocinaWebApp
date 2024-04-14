@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import './Login.css';
 import handleLogin from '../hooks/loginHook';
-import { useNavigate } from 'react-router-dom'; // Importa el hook useNavigate
+import { useNavigate } from 'react-router-dom'; 
 
 function Home() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [rememberUser, setRememberUser] = useState(false); // Estado para recordar usuario
+    const [rememberUser, setRememberUser] = useState(false);  
 
     const navigate = useNavigate();
 
     const handlePostLogin = async (e) => {
         e.preventDefault();
-        // Aquí puedes agregar la lógica para manejar el inicio de sesión
+        
         try {
             const respuesta = await handleLogin({ "username": email, "password": password });
 
@@ -63,7 +63,7 @@ function Home() {
                         type="checkbox"
                         id="remember"
                         checked={rememberUser}
-                        onChange={(e) => setRememberUser(e.target.checked)} // Actualiza el estado de rememberUser
+                        onChange={(e) => setRememberUser(e.target.checked)} 
                     />
                     <label htmlFor="remember">Recordar usuario</label>
                 </div>

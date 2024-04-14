@@ -4,9 +4,21 @@ import './NotificationComponent.css';
 
 function NotificationComponent() {
   const [notifications, setNotifications] = useState([]);
+  const [userName, setUserName] = useState('');
 
   useEffect(() => {
-    const socket = io('http://localhost:3000');
+    
+
+    //revisar si el usuario tiene un token
+    const token = localStorage.getItem('token');
+    if (!token) {
+      // Si no hay token, redirigir al usuario a la página de inicio de sesión
+      window.location.href = '/';
+    }
+
+
+    console.log('Connecting to server...', __WEBSOCKET__);
+    const socket = io(__WEBSOCKET__);
 
     socket.on('connect', () => {
       console.log('Connected to server');
@@ -19,6 +31,12 @@ function NotificationComponent() {
       setNotifications(prevNotifications => [change, ...prevNotifications]);
     });
 
+    // Simular obtener el nombre de usuario desde el localStorage
+    const storedUserName = localStorage.getItem('rememberedUser');
+    if (storedUserName) {
+      setUserName(storedUserName);
+    }
+
     return () => {
       socket.disconnect();
     };
@@ -28,11 +46,24 @@ function NotificationComponent() {
     setNotifications(prevNotifications => prevNotifications.filter(n => n !== notification));
   };
 
+  const handleLogout = () => {
+    // Lógica para cerrar sesión, como eliminar el token de localStorage
+    localStorage.removeItem('token');
+    localStorage.removeItem('role');
+    localStorage.removeItem('tienda');
+    localStorage.removeItem('rememberedUser');
+    // Redireccionar al usuario a la página de inicio de sesión, por ejemplo
+    window.location.href = '/';
+  };
+
   return (
     <>
     <center><h2>Notificaciones</h2></center>
     <div className="notification-container">
-      
+      <div className="user-info">
+        {userName && <p>¡Hola, {userName}!</p>}
+        <button onClick={handleLogout}>Cerrar sesión</button>
+      </div>
       {notifications.map((notification, index) => (
         <div className="notification" key={index}>
           <h2>Pedido Recibido</h2>
@@ -50,7 +81,8 @@ function NotificationComponent() {
           <button onClick={() => dismissNotification(notification)}>Descartar</button>
         </div>
       ))}
-    </div></>
+    </div>
+    </>
   );
 }
 

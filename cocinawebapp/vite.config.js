@@ -7,6 +7,8 @@ dotenv.config()
 export default defineConfig({
   plugins: [react()],
   define: {
-    __USUARIOS__: `"${process.env.USUARIOS}"`  
+    __USUARIOS__: `"${process.env.USUARIOS}"`  ,
+    __WEBSOCKET__: `"${process.env.WEBSOCKET}"`  ,
+    __PEDIDOS__: `"${process.env.PEDIDOS}"`  ,
   },
 })
