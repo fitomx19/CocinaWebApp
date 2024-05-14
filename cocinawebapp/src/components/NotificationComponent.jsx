@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import './NotificationComponent.css';
+import handleUpdatePreparado from '../hooks/pedidoPreparado';
 
 function NotificationComponent() {
   const [notifications, setNotifications] = useState([]);
@@ -43,6 +44,11 @@ function NotificationComponent() {
   }, []);
 
   const dismissNotification = (notification) => {
+
+    // Lógica para marcar la notificación como leída, por ejemplo, enviando una petición al servidor
+    console.log('Marking notification as read:', notification);
+    handleUpdatePreparado(notification._id);
+
     setNotifications(prevNotifications => prevNotifications.filter(n => n !== notification));
   };
 
@@ -85,7 +91,7 @@ function NotificationComponent() {
         </div>
        <div className='form-group'>
        <button className='redButton' onClick={() => dismissNotification(notification)}>Descartar</button>
-       <button className='greenButton' onClick={() => dismissNotification(notification)}>Actualizar</button>
+       <button className='greenButton' onClick={() => dismissNotification(notification)}>Listo!</button>
        </div>
       </div>
     ))}
